@@ -143,7 +143,6 @@ public class CustomerTest {
 
     private static Rental createRentalFor(int daysRented, int priceCode) {
         Movie movie = new Movie(TITLE, priceCode);
-        Rental rental = new Rental(movie, daysRented);
-        return rental;
+        return new Rental(movie, daysRented);
     }
 }
