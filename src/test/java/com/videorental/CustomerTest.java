@@ -12,19 +12,19 @@ public class CustomerTest {
     Customer customer = new Customer(NAME);
 
 
-    @Test
-    void sample() {
-        customer.addRental(new Rental(
-                new Movie("title", Movie.REGULAR),
-                10));
-        customer.addRental(new Rental(
-                new Movie("헤일메리", Movie.NEW_RELEASE),
-                55));
-
-        String receipt = customer.statement();
-        System.out.println(receipt);
-    };
-    
+//    @Test
+//    void sample() {
+//        customer.addRental(new Rental(
+//                new Movie("title", Movie.REGULAR),
+//                10));
+//        customer.addRental(new Rental(
+//                new Movie("헤일메리", Movie.NEW_RELEASE),
+//                55));
+//
+//        String receipt = customer.statement();
+//        System.out.println(receipt);
+//    };
+//
     @Test
     void returnNewCustomer() {
         assertNotNull(customer.getName());
@@ -65,7 +65,7 @@ public class CustomerTest {
     @Test
     void setPriceCodeFromRegularToNewRelease() {
         // 준비
-        Movie movie = new Movie(TITLE, Movie.REGULAR);
+        Movie movie = getMovie(Movie.REGULAR);
         movie.setPriceCode(Movie.NEW_RELEASE);
         customer.addRental(new Rental(movie, 3));
 
@@ -142,7 +142,20 @@ public class CustomerTest {
     }
 
     private static Rental createRentalFor(int daysRented, int priceCode) {
-        Movie movie = new Movie(TITLE, priceCode);
+        Movie movie = getMovie(priceCode);
         return new Rental(movie, daysRented);
+    }
+
+    private static Movie getMovie(int priceCode) {
+        switch (priceCode) {
+            case Movie.REGULAR:
+                return new RegularMovie(TITLE);
+            case Movie.NEW_RELEASE:
+                return new NewReleaseMovie(TITLE);
+            case Movie.CHILDRENS:
+                return new ChildrenMovie(TITLE);
+            default:
+                return null;
+        }
     }
 }
